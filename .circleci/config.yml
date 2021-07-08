@@ -1,0 +1,24 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: josephchu/ubuntu-cpp-build
+        user: root
+    steps:
+      - checkout
+      - run: ls -alh ~/project/test
+      - run:
+          name: Build & run the test executable
+          command: |
+            shopt -s globstar
+            g++ -std=c++17 -o test.out -DBOOST_TEST_DYN_LINK ${TEST_DIR}/*.cpp -lboost_unit_test_framework
+            ${PROJECT_DIR}/test.out -l all -- show_progress
+          environment:
+            PROJECT_DIR: /root/project
+            TEST_DIR: /root/project/test
+          
+workflows:
+  test:
+    jobs:
+      - test
