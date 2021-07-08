@@ -1,5 +1,5 @@
 #include "boost/test/unit_test.hpp"
-#include "src//smart_pointer/smart_ptr_base.hpp"
+#include "../src/smart_pointer/smart_ptr_base.hpp"
 
 template <typename T>
 class concrete_smart_ptr : public smart_ptr<T>
