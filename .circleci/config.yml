@@ -7,7 +7,6 @@ jobs:
         user: root
     steps:
       - checkout
-      - run: ls -alh ~/project/test
       - run:
           name: Build & run the test executable
           command: |
