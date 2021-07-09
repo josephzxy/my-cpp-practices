@@ -85,27 +85,11 @@ public:
         this->shared_count_ = other.shared_count_;
     }
 
-    shared_ptr<T>& operator=(shared_ptr<T> other) noexcept
-    {
-        other.swap(*this);
-        return *this;
-    }
+    shared_ptr<T>& operator=(shared_ptr<T> other) noexcept;
 
-    void swap(shared_ptr<T>& other) noexcept
-    {
-        std::swap(this->ptr_, other.ptr_);
-        std::swap(this->shared_count_, other.shared_count_);
-    }
+    void swap(shared_ptr<T>& other) noexcept;
 
-    size_t use_count() const
-    {
-        if (this->ptr_)
-        {
-            return this->shared_count_->get_count();
-        } else {
-            return 0;
-        }
-    }
+    size_t use_count() const;
 
     template <typename U>
     friend class shared_ptr;
