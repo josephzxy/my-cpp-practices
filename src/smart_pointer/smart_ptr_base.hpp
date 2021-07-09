@@ -4,10 +4,10 @@ template <typename T>
 class smart_ptr
 {
 public:
-    T* get() const;
-    T& operator*() const;
-    T* operator->() const;
-    operator bool() const;
+    T* get() const noexcept;
+    T& operator*() const noexcept;
+    T* operator->() const noexcept;
+    operator bool() const noexcept;
 
 protected:
     smart_ptr(T* ptr = nullptr)

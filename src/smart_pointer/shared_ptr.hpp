@@ -5,11 +5,12 @@
 class shared_count
 {
 public:
-    shared_count() : count_(1) {}
+    shared_count() noexcept
+        : count_(1) {}
 
-    void add_count();
-    size_t reduce_count();
-    size_t get_count() const;
+    void add_count() noexcept;
+    size_t reduce_count() noexcept;
+    size_t get_count() const noexcept;
 private:
     size_t count_;
 };
@@ -33,7 +34,7 @@ public:
         }
     }
 
-    shared_ptr(const shared_ptr<T>& other)
+    shared_ptr(const shared_ptr<T>& other) noexcept
     {
         this->ptr_ = other.ptr_;
         
@@ -43,7 +44,7 @@ public:
     }   
 
     template <typename U>
-    shared_ptr(const shared_ptr<U>& other)
+    shared_ptr(const shared_ptr<U>& other) noexcept
     {
         // TODO: need to ensure type U is the 
         // derived type from T
@@ -54,7 +55,7 @@ public:
         this->shared_count_->add_count();
     }
 
-    shared_ptr(shared_ptr<T>&& other)
+    shared_ptr(shared_ptr<T>&& other) noexcept
     {
         this->ptr_ = other.ptr_;
         if (!this->ptr_) return;
@@ -65,7 +66,7 @@ public:
     }
 
     template <typename U>
-    shared_ptr(shared_ptr<U>&& other)
+    shared_ptr(shared_ptr<U>&& other) noexcept
     {
         this->ptr_ = other.ptr_;
         if (!this->ptr_) return;
@@ -76,7 +77,7 @@ public:
     }
 
     template <typename U>
-    shared_ptr(const shared_ptr<U>& other, T* ptr)
+    shared_ptr(const shared_ptr<U>& other, T* ptr) noexcept
     {
         this->ptr_ = ptr;
         if (!this->ptr_) { return; }
@@ -84,13 +85,13 @@ public:
         this->shared_count_ = other.shared_count_;
     }
 
-    shared_ptr<T>& operator=(shared_ptr<T> other)
+    shared_ptr<T>& operator=(shared_ptr<T> other) noexcept
     {
         other.swap(*this);
         return *this;
     }
 
-    void swap(shared_ptr<T>& other)
+    void swap(shared_ptr<T>& other) noexcept
     {
         std::swap(this->ptr_, other.ptr_);
         std::swap(this->shared_count_, other.shared_count_);
