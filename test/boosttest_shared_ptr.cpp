@@ -43,15 +43,15 @@ BOOST_AUTO_TEST_CASE(test_copy_constructor)
     Test the copy constructor
     shared_ptr(const shared_ptr<T>& other)
     */
-    shared_ptr<int> p1{ new int[1] };
+    shared_ptr<int> p1 { new int[1] };
     BOOST_CHECK_EQUAL(p1.use_count(), 1);
-    shared_ptr<int> p2{ p1 };
+    shared_ptr<int> p2 { p1 };
     BOOST_CHECK_EQUAL(p1.use_count(), 2);
     BOOST_CHECK_EQUAL(p2.use_count(), 2);
 
-    shared_ptr<int> p1_null{ nullptr };
+    shared_ptr<int> p1_null { nullptr };
     BOOST_CHECK_EQUAL(p1_null.use_count(), 0);
-    shared_ptr<int> p2_null{ p1_null };
+    shared_ptr<int> p2_null { p1_null };
     BOOST_CHECK_EQUAL(p1_null.use_count(), 0);
     BOOST_CHECK_EQUAL(p2_null.use_count(), 0);
 }
@@ -62,16 +62,16 @@ BOOST_AUTO_TEST_CASE(test_move_constructor)
     Test the move constructor
     shared_ptr(shared_ptr<T>&& other)
     */
-    shared_ptr<int> p1{ new int[1] };
+    shared_ptr<int> p1 { new int[1] };
     BOOST_CHECK_EQUAL(p1.use_count(), 1);
-    shared_ptr<int> p2{ std::move(p1) };
+    shared_ptr<int> p2 { std::move(p1) };
     BOOST_TEST(!p1.get());
     BOOST_CHECK_EQUAL(p1.use_count(), 0);
     BOOST_CHECK_EQUAL(p2.use_count(), 1);
 
-    shared_ptr<int> p1_null{ nullptr };
+    shared_ptr<int> p1_null { nullptr };
     BOOST_CHECK_EQUAL(p1_null.use_count(), 0);
-    shared_ptr<int> p2_null{ std::move(p1_null) };
+    shared_ptr<int> p2_null { std::move(p1_null) };
     BOOST_CHECK_EQUAL(p1_null.use_count(), 0);
     BOOST_CHECK_EQUAL(p2_null.use_count(), 0);
 }
@@ -85,8 +85,8 @@ BOOST_AUTO_TEST_CASE(test_operator_assign)
     BOOST_TEST(std::is_copy_assignable<shared_ptr<int>>::value);
     BOOST_TEST(std::is_move_assignable<shared_ptr<int>>::value);
 
-    shared_ptr<int> p1{ new int[1] };
-    shared_ptr<int> p2{ new int[1] };
+    shared_ptr<int> p1 { new int[1] };
+    shared_ptr<int> p2 { new int[1] };
 
     BOOST_CHECK_EQUAL(p1.use_count(), 1);
     BOOST_TEST(p1.get() != p2.get());
@@ -104,8 +104,8 @@ BOOST_AUTO_TEST_CASE(test_swap)
     */
     int* raw_p1 = new int[1];
     int* raw_p2 = new int[1];
-    shared_ptr<int> p1{ raw_p1 };
-    shared_ptr<int> p2{ raw_p2 };
+    shared_ptr<int> p1 { raw_p1 };
+    shared_ptr<int> p2 { raw_p2 };
     shared_ptr<int> p3 = p2;
 
     BOOST_CHECK_EQUAL(p1.use_count(), 1);
@@ -122,27 +122,25 @@ BOOST_AUTO_TEST_CASE(test_swap)
 
 BOOST_AUTO_TEST_CASE(test_use_cont)
 {
-    shared_ptr<int> p1{ new int[1] };
+    shared_ptr<int> p1 { new int[1] };
     BOOST_CHECK_EQUAL(p1.use_count(), 1);
-    shared_ptr<int> p2{ nullptr };
+    shared_ptr<int> p2 { nullptr };
     BOOST_CHECK_EQUAL(p2.use_count(), 0);
 }
 
 BOOST_AUTO_TEST_CASE(test_dynamic_pointer_cast)
 {
-    class Base
-    {
-      public:
-        virtual ~Base() {}
+    class Base {
+    public:
+        virtual ~Base() { }
     };
 
-    class Derived : public Base
-    {
-      public:
-        ~Derived() {}
+    class Derived : public Base {
+    public:
+        ~Derived() { }
     };
 
-    shared_ptr<Base> p_b{ new Derived() };
+    shared_ptr<Base> p_b { new Derived() };
     BOOST_CHECK_EQUAL(p_b.use_count(), 1);
 
     shared_ptr<Derived> p_d = dynamic_pointer_cast<Derived>(p_b);

@@ -2,27 +2,25 @@
 #include "smart_ptr_base.hpp"
 #include <cstddef>
 
-class shared_count
-{
-  public:
+class shared_count {
+public:
     shared_count() noexcept
-      : count_(1)
-    {}
+        : count_(1)
+    {
+    }
 
     void add_count() noexcept;
     size_t reduce_count() noexcept;
     size_t get_count() const noexcept;
 
-  private:
+private:
     size_t count_;
 };
 
-template<typename T>
-class shared_ptr : public smart_ptr<T>
-{
-  public:
+template <typename T> class shared_ptr : public smart_ptr<T> {
+public:
     explicit shared_ptr(T* ptr = nullptr)
-      : shared_count_(nullptr)
+        : shared_count_(nullptr)
     {
         this->ptr_ = ptr;
         if (ptr) {
@@ -47,8 +45,7 @@ class shared_ptr : public smart_ptr<T>
         this->shared_count_->add_count();
     }
 
-    template<typename U>
-    shared_ptr(const shared_ptr<U>& other) noexcept
+    template <typename U> shared_ptr(const shared_ptr<U>& other) noexcept
     {
         // TODO: need to ensure type U is the
         // derived type from T
@@ -71,8 +68,7 @@ class shared_ptr : public smart_ptr<T>
         other.shared_count_ = nullptr;
     }
 
-    template<typename U>
-    shared_ptr(shared_ptr<U>&& other) noexcept
+    template <typename U> shared_ptr(shared_ptr<U>&& other) noexcept
     {
         this->ptr_ = other.ptr_;
         if (!this->ptr_)
@@ -83,7 +79,7 @@ class shared_ptr : public smart_ptr<T>
         other.shared_count_ = nullptr;
     }
 
-    template<typename U>
+    template <typename U>
     shared_ptr(const shared_ptr<U>& other, T* ptr) noexcept
     {
         this->ptr_ = ptr;
@@ -100,16 +96,14 @@ class shared_ptr : public smart_ptr<T>
 
     size_t use_count() const;
 
-    template<typename U>
-    friend class shared_ptr;
+    template <typename U> friend class shared_ptr;
 
-  private:
+private:
     shared_count* shared_count_;
 };
 
-template<typename T, typename U>
-shared_ptr<T>
-dynamic_pointer_cast(const shared_ptr<U>& other)
+template <typename T, typename U>
+shared_ptr<T> dynamic_pointer_cast(const shared_ptr<U>& other)
 {
     T* ptr = dynamic_cast<T*>(other.get());
     return shared_ptr<T>(other, ptr);

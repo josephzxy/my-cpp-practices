@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_CASE(test_assignablility)
     but move assignable
     */
     int* raw_p = new int[1];
-    unique_ptr<int> p1{ raw_p };
+    unique_ptr<int> p1 { raw_p };
 
     BOOST_TEST(!std::is_copy_assignable<unique_ptr<int>>::value);
     // Does not compile as the copy constructor is deleted
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(test_release)
     Test unique_ptr<T>::release()
     */
     int* raw_p = new int[1];
-    unique_ptr<int> p{ raw_p };
+    unique_ptr<int> p { raw_p };
 
     BOOST_TEST(p.release() == raw_p);
     BOOST_TEST(p.get() == nullptr);
@@ -42,8 +42,8 @@ BOOST_AUTO_TEST_CASE(test_swap)
     int* raw_p1 = new int[1];
     int* raw_p2 = new int[1];
 
-    unique_ptr<int> p1{ raw_p1 };
-    unique_ptr<int> p2{ raw_p2 };
+    unique_ptr<int> p1 { raw_p1 };
+    unique_ptr<int> p2 { raw_p2 };
 
     p1.swap(p2);
     BOOST_TEST(p1.get() == raw_p2);

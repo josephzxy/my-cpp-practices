@@ -1,20 +1,19 @@
 #pragma once
 
-template<typename T>
-class smart_ptr
-{
-  public:
+template <typename T> class smart_ptr {
+public:
     T* get() const noexcept;
     T& operator*() const noexcept;
     T* operator->() const noexcept;
     operator bool() const noexcept;
 
-  protected:
+protected:
     smart_ptr(T* ptr = nullptr)
-      : ptr_(ptr)
-    {}
+        : ptr_(ptr)
+    {
+    }
     // Resource release should be done in derived classes's destructor
-    virtual ~smart_ptr() {}
+    virtual ~smart_ptr() { }
     T* ptr_;
 };
 
