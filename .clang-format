@@ -1,0 +1,6 @@
+BasedOnStyle: GNU
+IndentWidth: 4
+
+Language: Cpp
+PointerAlignment: Left
+ColumnLimit: 76
