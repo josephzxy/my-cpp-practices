@@ -1,4 +1,4 @@
-BasedOnStyle: GNU
+BasedOnStyle: Mozilla
 IndentWidth: 4
 
 Language: Cpp
